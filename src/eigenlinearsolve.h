@@ -1,6 +1,5 @@
 #pragma once
 #include <Eigen/Sparse>
-#include <Eigen/src/SparseCore/SparseUtil.h>
 #include <Eigen/Dense>
 #include <Eigen/src/Core/Map.h>
 #include "sparse.hpp"
@@ -16,24 +15,20 @@ EigenSpMat* sparse_to_eigen(const SpMat<double>& As)
     // assumption: A is square and symmetric
     int n = As.n;
     EigenSpMat* pLowerMat = new EigenSpMat(n, n);
-    std::vector<Triplet> TripletList;
     for (int i = 0; i < n; i++) {
         for (int k = 0; k < As.rows[i].indices.size(); k++) {
             int j = As.rows[i].indices[k]; //columnIndex
             if (j < i) continue;
-            TripletList.push_back(Triplet(j, i, As.rows[i].entries[k]));  ////转为下三角矩阵  columnIndex变为roeIndex
+            pLowerMat->insert(j, i) = As.rows[i].entries[k]; //转为下三角矩阵  columnIndex变为roeIndex
         }
-    }
-    pLowerMat->setFromTriplets(TripletList.begin(), TripletList.end());
+    };
     return pLowerMat;
 }
 
 template <int m> EigenSpMat* sparse_to_eigen(const SpMat< Mat<m, m> >& As)
 {
-    // assumption: A is square and symmetric
     int n = As.n;
     EigenSpMat* pLowerMat = new EigenSpMat(n * m, n * m);
-    std::vector<Triplet> TripletList;
     for (int i = 0; i < n; i++)
     {
         for (int k = 0; k < m; k++)  //m是block的size
@@ -45,12 +40,11 @@ template <int m> EigenSpMat* sparse_to_eigen(const SpMat< Mat<m, m> >& As)
                 const Mat<m, m>& Aij = As.rows[i].entries[jj];
                 for (int l = (i == j) ? k : 0; l < m; l++)
                 {
-                    TripletList.push_back(Triplet(j * m + l, i * m + k, Aij(k, l)));
+                    pLowerMat->insert(j * m + l, i * m + k) = Aij(k, l);
                 }
             }
         }
     }
-    pLowerMat->setFromTriplets(TripletList.begin(), TripletList.end());
     return pLowerMat;
 }
 
