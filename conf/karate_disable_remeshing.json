@@ -5,8 +5,8 @@
     "frame_steps": 8,
     "end_time": 20,
     "cloths": [{
-        "mesh": "../meshes/pants3.obj",
-        "transform": {"translate": [0, 0, 0.5]},
+        "mesh": "../meshes/remeshedpants3.obj",
+        "transform": {"translate": [0, 0, 0]},
         "materials": [{
             "data": "../materials/11oz-black-denim.json",
             "strain_limits": [0.95, 1.05]
@@ -19,8 +19,8 @@
             "aspect_min": 0.2
         }
     }, {
-        "mesh": "../meshes/tshirt.obj",
-        "transform": {"translate": [0, 0, 0.5]},
+        "mesh": "../meshes/remeshedtshirt.obj",
+        "transform": {"translate": [0, 0, 0]},
         "materials": [{
             "data": "../materials/gray-interlock.json",
             "strain_limits": [0.95, 1.05]
@@ -33,8 +33,8 @@
             "aspect_min": 0.2
         }
     }, {
-        "mesh": "../meshes/jacket.obj",
-        "transform": {"translate": [0, 0, 0.5]},
+        "mesh": "../meshes/remeshedjacket.obj",
+        "transform": {"translate": [0, 0, 0]},
         "materials": [{
             "data": "../materials/camel-ponte-roma.json",
             "strain_limits": [0.95, 1.05],
@@ -65,6 +65,6 @@
         }
     },
     "gravity": [ 0, 0, -9.8 ],
-    "disable": [ "strainlimiting" ],
+    "disable": [ "remeshing", "strainlimiting" ],
     "magic": {"repulsion_thickness": 5e-3, "collision_stiffness": 1e6}
 }

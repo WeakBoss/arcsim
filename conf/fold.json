@@ -5,11 +5,11 @@
     "frame_steps": 40,
     "end_time": 14,
     "cloths": [{
-        "mesh": "meshes/letter-with-midpoints.obj",
+        "mesh": "../meshes/letter-with-midpoints.obj",
         "transform": {"translate": [-0.1, -0.15, 1e-3]},
         // "transform": {"translate": [0.5, 0, 0.5]},
         "materials": [{
-            "data": "materials/paper.json",
+            "data": "../materials/paper.json",
             "yield_curv": 200,
             "weakening": 1
         }],
@@ -50,14 +50,14 @@
         {"nodes": [8], "start_time": 5, "end_time": 9, "fade_time": 1}
     ],
     "obstacles": [{
-        "mesh": "meshes/square.obj",
+        "mesh": "../meshes/square.obj",
         "transform": {"translate": [-0.5,-0.5,0]}
     }, {
-        "mesh": "meshes/roller.obj",
+        "mesh": "../meshes/roller.obj",
         "transform": {"translate": [-0.15,-0.3,0.057], "rotate": [90, 1,2,0], "scale": 0.05},
         "motion": 1
     }, {
-        "mesh": "meshes/roller.obj",
+        "mesh": "../meshes/roller.obj",
         "transform": {"translate": [-0.3,0.3,0.060], "rotate": [90, 1,-2,0], "scale": 0.05},
         "motion": 3
     }],

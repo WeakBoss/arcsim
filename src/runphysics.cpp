@@ -36,7 +36,6 @@
 #include <boost/filesystem.hpp>
 #include <cstdio>
 #include <fstream>
-
 using namespace std;
 
 static string outprefix;
@@ -107,8 +106,8 @@ void save (const Simulation &sim, int frame) {
 
 void sim_step() {
     fps.tick();
-    advance_step(sim);
-    if (sim.step % sim.frame_steps == 0) {
+    advance_step(sim); //step++
+    if (sim.step % sim.frame_steps == 0) { //sim.step % 8 == 0  就保存一次
         save(sim, sim.frame);
         save_timings();
     }

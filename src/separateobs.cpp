@@ -84,7 +84,7 @@ void separate_obstacles (vector<Mesh*> &obs_meshes,
         if (!ixns.empty())
             update_active(accs, ixns);
         vector<Ixn> new_ixns = find_intersections(accs, obs_accs);
-        if (new_ixns.empty())
+        if (new_ixns.empty())  //若find_intersections 找不到新的ixns了，就break了
             break;
         append(ixns, new_ixns);
         solve_ixns(ixns);
