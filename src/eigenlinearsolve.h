@@ -125,7 +125,7 @@ std::vector<double> eigen_linear_solve(const SpMat<double>& A, const std::vector
 {
     EigenSpMat* MatA = sparse_to_eigen(A);
     EigenVector VecB = Eigen::Map<const Eigen::VectorXd, Eigen::Unaligned>(b.data(), b.size());
-#ifdef Eigen_SimplicialLLT
+#ifdef Eigen_SimplicialLDLT
     EigenVector VecX = simplicialLDLT_solve(MatA, VecB);
 #elif defined EIGEN_CONJUGATE_GRADIENT
     EigenVector VecX = conjugate_gradient_solve(MatA, VecB);
@@ -139,7 +139,7 @@ template <int m> std::vector< Vec<m> > eigen_linear_solve
     EigenSpMat* MatA = sparse_to_eigen(A);
     EigenVector VecB;
     blockVecDumpEigen(VecB, b);
-#ifdef Eigen_SimplicialLLT
+#ifdef Eigen_SimplicialLDLT
     EigenVector VecX = simplicialLDLT_solve(MatA, VecB);
 #elif defined EIGEN_CONJUGATE_GRADIENT
     EigenVector VecX = conjugate_gradient_solve(MatA, VecB);

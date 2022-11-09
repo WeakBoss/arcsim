@@ -2,17 +2,17 @@
 #include<string>
 #define EIGEN_LINEAR_SOLVE
 
-#define Eigen_SimplicialLLT  
+#define Eigen_SimplicialLDLT  
 //#define EIGEN_CONJUGATE_GRADIENT
 
 //#define SIMULATE
-#define SIMULATEWITHOUTSAVE
+//#define SIMULATEWITHOUTSAVE
 //#define SIMULATEOFFLINE
-//#define REPLAY
+#define REPLAY
 
 
 const std::string ConfPath = "../conf/karate.json";
-const std::string OutPath = "../output";
+const std::string OutPath = "../karateSimulateOutput";
 
 #ifdef SIMULATE
 const std::string ArcsimMethod = "simulate";
