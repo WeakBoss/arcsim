@@ -11,7 +11,7 @@
 //#define REPLAY
 
 
-const std::string ConfPath = "../conf/sphere.json";
+const std::string ConfPath = "../conf/sleeve.json";
 const std::string OutPath = "../karateSimulateOutput";
 
 #ifdef SIMULATE

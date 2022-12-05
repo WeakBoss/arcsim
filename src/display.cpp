@@ -487,24 +487,37 @@ void display_world () {
     }
 }
 
-void display_text()
+void initImgui()
 {
-    glClearColor(1.0, 1.0, 1.0, 0.0); /* white background */
-    glColor3f(1.0, 0.0, 0.0); /* draw in red */
-    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
-    gluOrtho2D(0.0, 500.0, 0.0, 500.0);
-    glMatrixMode(GL_MODELVIEW);
+    IMGUI_CHECKVERSION();
+    ImGui::CreateContext();
+    // Setup Dear ImGui style
+    ImGui::StyleColorsDark();
+    //ImGui::StyleColorsLight();
+    ImGui_ImplGLUT_Init();
+    ImGui_ImplOpenGL2_Init();
+}
+
+void cleanImgui()
+{
+    ImGui_ImplOpenGL2_Shutdown();
+    ImGui_ImplGLUT_Shutdown();
+    ImGui::DestroyContext();
+}
+
+void display_ui()
+{
+    ImGui_ImplOpenGL2_NewFrame();
+    ImGui_ImplGLUT_NewFrame();
+
+    bool show_demo_window = true;
+    ImGui::ShowDemoWindow(&show_demo_window);
+
+    ImGui::Render();
     glClear(GL_COLOR_BUFFER_BIT);
-    float x = 200;
-    float y = 200;
-    char string[] = "helloworld! ";
-    char* c;
-    glRasterPos2f(x, y);
-    for (c = string; *c != '\0'; c++) {
-        glutBitmapCharacter(GLUT_BITMAP_8_BY_13, *c);//此处为作图函数。不必要在glbegin（）函数之间的。
-    }
+    ImGui_ImplOpenGL2_RenderDrawData(ImGui::GetDrawData());
     glutSwapBuffers();
+    glutPostRedisplay();
 }
 
 struct MouseState {
@@ -528,6 +541,7 @@ void zoom (bool in) {
 }
 
 void mouse (int button, int state, int x, int y) {
+    //xy为当前鼠标的窗口坐标（以左上角为原点）
     mouse_state.down = (state == GLUT_DOWN);
     mouse_state.x = x;
     mouse_state.y = y;
@@ -588,17 +602,29 @@ void run_glut (const GlutCallbacks &cb) {
     glutKeyboardFunc(cb.keyboard);
     glutSpecialFunc(cb.special);
     double x[5] = {0, WindowWidth/4, WindowWidth*2/4, WindowWidth*3/4,WindowWidth };
-    void (*display[4]) () = {display_material, display_plastic, display_world, display_text };
+    void (*display[4]) () = {display_material, display_plastic, display_world, display_ui };
+
     for (int i = 0; i < 4; i++) {
         subwindows[i] = glutCreateSubWindow(window, x[i],0, x[i+1],720);
         glutDisplayFunc(display[i]);
-        glutKeyboardFunc(cb.keyboard);
-        glutSpecialFunc(cb.special);
-        glutMouseFunc(mouse);
-        glutMotionFunc(motion);
+        if (i == 3)
+        {
+            initImgui();
+            ImGui_ImplGLUT_InstallFuncs();
+        }
+        else
+        {
+            glutDisplayFunc(display[i]);
+            glutKeyboardFunc(cb.keyboard);
+            glutSpecialFunc(cb.special);
+            glutMouseFunc(mouse);
+            glutMotionFunc(motion);
+        }
+
     }
     ::pane_enabled[PlasticPane] = sim.enabled[Simulation::Plasticity];
     glutMainLoop();
+    cleanImgui();
 }
 
 void redisplay () {
