@@ -34,7 +34,7 @@ extern Simulation sim;
 extern Timer fps;
 extern int frame;
 
-extern int subwindows[3];
+extern int subwindows[4];
 
 struct GlutCallbacks {
     void (*idle) ();

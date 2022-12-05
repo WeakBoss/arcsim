@@ -41,6 +41,8 @@ using namespace std;
 
 static vector<Mesh*> &meshes = sim.cloth_meshes;
 string obj2png_filename;
+const int WindowWidth = 1600;
+const int WindowHeight = 720;
 
 extern int frame;
 extern Timer fps;
@@ -52,21 +54,21 @@ struct View {
     View (): lat(0), lon(0), offset(0), scale(0.5) {}
 };
 
-enum Pane {MaterialPane, PlasticPane, WorldPane};
+enum Pane {MaterialPane, PlasticPane, WorldPane, TextPane};
 
-bool pane_enabled[3] = {true, true, true};
-int subwindows[3];
-View views[3];
+bool pane_enabled[4] = {true, true, true, true};
+int subwindows[4];
+View views[4];
 
-int get_pane () {return find(glutGetWindow(), subwindows, 3);}
+int get_pane () {return find(glutGetWindow(), subwindows, 4);}
 
 void reshape (int w, int h) {
     int npanes = 0;
-    for (int i = 0; i < 3; i++)
+    for (int i = 0; i < 4; i++)
         if (pane_enabled[i])
             npanes++;
     int j = 0;
-    for (int i = 0; i < 3; i++) {
+    for (int i = 0; i < 4; i++) {
         glutSetWindow(subwindows[i]);
         int x0 = w*j/npanes, x1 = pane_enabled[i] ? w*(j+1)/npanes : x0+1;
         glutPositionWindow(x0, 0);
@@ -485,6 +487,26 @@ void display_world () {
     }
 }
 
+void display_text()
+{
+    glClearColor(1.0, 1.0, 1.0, 0.0); /* white background */
+    glColor3f(1.0, 0.0, 0.0); /* draw in red */
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    gluOrtho2D(0.0, 500.0, 0.0, 500.0);
+    glMatrixMode(GL_MODELVIEW);
+    glClear(GL_COLOR_BUFFER_BIT);
+    float x = 200;
+    float y = 200;
+    char string[] = "helloworld! ";
+    char* c;
+    glRasterPos2f(x, y);
+    for (c = string; *c != '\0'; c++) {
+        glutBitmapCharacter(GLUT_BITMAP_8_BY_13, *c);//此处为作图函数。不必要在glbegin（）函数之间的。
+    }
+    glutSwapBuffers();
+}
+
 struct MouseState {
     bool down;
     int x, y;
@@ -558,16 +580,16 @@ void run_glut (const GlutCallbacks &cb) {
     char *argv = argv0;
     glutInit(&argc, &argv);
     glutInitDisplayMode(GLUT_RGBA|GLUT_DOUBLE|GLUT_DEPTH|GLUT_MULTISAMPLE);
-    glutInitWindowSize(1280,720);
+    glutInitWindowSize(WindowWidth,WindowHeight);
     int window = glutCreateWindow("ARCSim");
     glutDisplayFunc(nop);
     glutReshapeFunc(reshape);
     glutIdleFunc(cb.idle);
     glutKeyboardFunc(cb.keyboard);
     glutSpecialFunc(cb.special);
-    double x[4] = {0, 1280/3, 1280*2/3, 1280};
-    void (*display[3]) () = {display_material, display_plastic, display_world};
-    for (int i = 0; i < 3; i++) {
+    double x[5] = {0, WindowWidth/4, WindowWidth*2/4, WindowWidth*3/4,WindowWidth };
+    void (*display[4]) () = {display_material, display_plastic, display_world, display_text };
+    for (int i = 0; i < 4; i++) {
         subwindows[i] = glutCreateSubWindow(window, x[i],0, x[i+1],720);
         glutDisplayFunc(display[i]);
         glutKeyboardFunc(cb.keyboard);
@@ -580,7 +602,7 @@ void run_glut (const GlutCallbacks &cb) {
 }
 
 void redisplay () {
-    for (int i = 0; i < 3; i++) {
+    for (int i = 0; i < 4; i++) {
         glutSetWindow(subwindows[i]);
         glutPostRedisplay();
     }

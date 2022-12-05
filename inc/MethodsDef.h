@@ -6,12 +6,12 @@
 //#define EIGEN_CONJUGATE_GRADIENT
 
 //#define SIMULATE
-//#define SIMULATEWITHOUTSAVE
+#define SIMULATEWITHOUTSAVE
 //#define SIMULATEOFFLINE
-#define REPLAY
+//#define REPLAY
 
 
-const std::string ConfPath = "../conf/karate.json";
+const std::string ConfPath = "../conf/sphere.json";
 const std::string OutPath = "../karateSimulateOutput";
 
 #ifdef SIMULATE
