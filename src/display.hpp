@@ -31,7 +31,7 @@
 #include "timer.hpp"
 
 extern Simulation sim;
-extern Timer fps;
+extern Timer sim_timer;
 extern int frame;
 
 extern int subwindows[4];

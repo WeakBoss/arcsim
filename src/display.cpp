@@ -27,7 +27,7 @@
 #include "display.hpp"
 
 #ifndef NO_OPENGL
-
+#include <sstream>
 #include "bvh.hpp"
 #include "geometry.hpp"
 #include "io.hpp"
@@ -35,7 +35,7 @@
 #include "opengl.hpp"
 #include "timer.hpp"
 #include "util.hpp"
-#include <sstream>
+#include "imgui_configration.h"
 
 using namespace std;
 
@@ -43,9 +43,6 @@ static vector<Mesh*> &meshes = sim.cloth_meshes;
 string obj2png_filename;
 const int WindowWidth = 1600;
 const int WindowHeight = 720;
-
-extern int frame;
-extern Timer fps;
 
 struct View {
     double lat, lon;
@@ -487,38 +484,11 @@ void display_world () {
     }
 }
 
-void initImgui()
-{
-    IMGUI_CHECKVERSION();
-    ImGui::CreateContext();
-    // Setup Dear ImGui style
-    ImGui::StyleColorsDark();
-    //ImGui::StyleColorsLight();
-    ImGui_ImplGLUT_Init();
-    ImGui_ImplOpenGL2_Init();
-}
 
-void cleanImgui()
-{
-    ImGui_ImplOpenGL2_Shutdown();
-    ImGui_ImplGLUT_Shutdown();
-    ImGui::DestroyContext();
-}
 
-void display_ui()
-{
-    ImGui_ImplOpenGL2_NewFrame();
-    ImGui_ImplGLUT_NewFrame();
 
-    bool show_demo_window = true;
-    ImGui::ShowDemoWindow(&show_demo_window);
 
-    ImGui::Render();
-    glClear(GL_COLOR_BUFFER_BIT);
-    ImGui_ImplOpenGL2_RenderDrawData(ImGui::GetDrawData());
-    glutSwapBuffers();
-    glutPostRedisplay();
-}
+
 
 struct MouseState {
     bool down;

@@ -42,10 +42,16 @@ static int frameskip;
 
 static bool running = false;
 
+Timer replay_timer;
+Timer load_clothes_timer;
+Timer replay_obstacles_timer;
+
 static void reload () {
     int fullframe = ::frame*::frameskip;
     sim.time = fullframe * sim.frame_time;
+    load_clothes_timer.tick();
     load_objs(sim.cloth_meshes, stringf("%s/%04d",inprefix.c_str(), fullframe));
+    load_clothes_timer.tock();
     if (sim.cloth_meshes[0]->verts.empty()) {
         if (::frame == 0)
             exit(EXIT_FAILURE);
@@ -54,22 +60,24 @@ static void reload () {
         ::frame = 0;
         reload();
     }
+    replay_obstacles_timer.tick();
     for (int o = 0; o < sim.obstacles.size(); o++)
         sim.obstacles[o].get_mesh(sim.time);
+    replay_obstacles_timer.tock();
 }
 
 static void idle () {
     if (!running)
         return;
-    fps.tick();
+    replay_timer.tick();
     if (!outprefix.empty()) {
         char filename[256];
         snprintf(filename, 256, "%s/%04d.png", outprefix.c_str(), ::frame);
         save_screenshot(filename);
     }
-    ::frame++;
+    sim.frame =::frame++;
     reload();
-    fps.tock();
+    replay_timer.tock();
     redisplay();
 }
 

@@ -43,7 +43,7 @@ static fstream timingfile;
 
 Simulation sim;
 int frame;
-Timer fps;
+Timer sim_timer;
 
 void copy_file (const string &input, const string &output);
 
@@ -105,13 +105,13 @@ void save (const Simulation &sim, int frame) {
 }
 
 void sim_step() {
-    fps.tick();
+    sim_timer.tick();
     advance_step(sim); //step++
+    sim_timer.tock();
     if (sim.step % sim.frame_steps == 0) { //sim.step % 8 == 0  就保存一次
         save(sim, sim.frame);
         save_timings();
     }
-    fps.tock();
     if (sim.time >= sim.end_time || sim.frame >= sim.end_frame)
         exit(EXIT_SUCCESS);
 }

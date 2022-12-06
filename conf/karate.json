@@ -65,6 +65,6 @@
         }
     },
     "gravity": [ 0, 0, -9.8 ],
-    "disable": [ "strainlimiting" ],
+    //"disable": [ "strainlimiting" ],
     "magic": {"repulsion_thickness": 5e-3, "collision_stiffness": 1e6}
 }

@@ -51,6 +51,14 @@ static const int proximity = Simulation::Proximity,
                  popfilter = Simulation::PopFilter,
                  plasticity = Simulation::Plasticity;
 
+Timer obstacles_timer;
+Timer get_constraint_timer;
+Timer physics_step_timer;
+Timer plasticity_step_timer;
+Timer strainlimitng_step_timer;
+Timer collision_step_timer;
+Timer remeshing_step_timer;
+
 void physics_step (Simulation &sim, const vector<Constraint*> &cons);
 void plasticity_step (Simulation &sim);
 void strainlimiting_step (Simulation &sim, const vector<Constraint*> &cons);
@@ -125,15 +133,36 @@ void advance_frame (Simulation &sim) {
 void advance_step (Simulation &sim) {
     sim.time += sim.step_time;
     sim.step++;
+
+    obstacles_timer.tick();
     update_obstacles(sim, false);
+    obstacles_timer.tock();
+
+    get_constraint_timer.tick();
     vector<Constraint*> cons = get_constraints(sim, true);
+    get_constraint_timer.tock();
+
+    physics_step_timer.tick();
     physics_step(sim, cons);
+    physics_step_timer.tock();
+
+    plasticity_step_timer.tick();
     plasticity_step(sim);
+    plasticity_step_timer.tock();
+
+    strainlimitng_step_timer.tick();
     strainlimiting_step(sim, cons);
+    strainlimitng_step_timer.tock();
+
+    collision_step_timer.tick();
     collision_step(sim);
+    collision_step_timer.tock();
+
     if (sim.step % sim.frame_steps == 0) {
+        remeshing_step_timer.tick();
         remeshing_step(sim);
         sim.frame++;
+        remeshing_step_timer.tock();
     }
     delete_constraints(cons);
 }
