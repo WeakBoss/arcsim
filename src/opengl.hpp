@@ -47,6 +47,7 @@
 #include "imgui.h"
 #include "imgui_impl_glut.h"
 #include "imgui_impl_opengl2.h"
+#include "implot.h"
 #define GL_SILENCE_DEPRECATION
 #ifdef _MSC_VER
 #pragma warning (disable: 4505) // unreferenced local function has been removed

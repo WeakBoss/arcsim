@@ -40,7 +40,7 @@
 using namespace std;
 
 static vector<Mesh*> &meshes = sim.cloth_meshes;
-string obj2png_filename;
+std::string obj2png_filename;
 const int WindowWidth = 1600;
 const int WindowHeight = 720;
 
