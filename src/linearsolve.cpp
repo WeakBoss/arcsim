@@ -4,6 +4,8 @@
 #include "timer.hpp"
 #include "MethodsDef.h"
 
+#include <Eigen/core>
+
 std::vector<double> linear_solve(const SpMat<double>& A, const std::vector<double>& b)
 {
 #ifdef EIGEN_LINEAR_SOLVE

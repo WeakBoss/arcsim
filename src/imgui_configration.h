@@ -99,7 +99,7 @@ void display_ui()
     static float history = sim.end_time;
     ImGui::SliderFloat("History", &history, 1, 30, "%.1f s");
     for (int i = 0; i < num_substep; i++)
-        substep_buffers[i].Span = history;
+        substep_buffers[i].Span = history; 
 
     ImPlot::BeginPlot("substep cost time");
     ImPlot::SetupAxes("time", "substep time/ms");

@@ -29,6 +29,8 @@
 #include "magic.hpp"
 using namespace std;
 
+//每个约束都有一个value 和value对node->x的导数，还有由value定义的能量，和能量对value的两个导数
+
 //Eq 想要约束到固定值，Glue 想要两个点靠近 ， Ineq  四个点*权重的值
 //double EqCon::value (int *sign) {
 //    if (sign) *sign = 0;
@@ -41,7 +43,7 @@ double EqCon::energy_grad (double value) {return stiff*value;}
 double EqCon::energy_hess (double value) {return stiff;}
 MeshGrad EqCon::friction (double dt, MeshHess &jac) {return MeshGrad();}
 
-//每个约束都有一个value 和value对node的导数，还有由value定义的能量，和能量对value的导数
+
 //double GlueCon::value (int *sign) {
 //    if (sign) *sign = 0;
 //    return dot(n, nodes[1]->x - nodes[0]->x);

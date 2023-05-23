@@ -48,6 +48,6 @@
         "transform": {"scale": 0.12, "rotate": [180, 0, 1, 0]},
         "motion": 1
     }],
-    "gravity": [0, 0, -9.8],
+    "gravity": [ 0, 0, -9.8 ],
     "magic": {"repulsion_thickness": 5e-3, "collision_stiffness": 1e6}
 }
