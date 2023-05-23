@@ -8,6 +8,7 @@ http://graphics.berkeley.edu/resources/ARCSim/index.html
 #### 环境配置
 需要依赖第三方库：boost, boost_date_time, boost_filesystem, boost_system, boost_timer, freeglut, eigen3，jsoncpp，alglib，imgui
 #### 运行示例：arcSim是一个离线的模拟库，此暂时为录帧重播
+![](git/sleeve.gif)
  
 
  
