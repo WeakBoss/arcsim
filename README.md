@@ -11,7 +11,7 @@ ArcSim是一个模拟引擎，用于为布料、纸张、塑料和金属等可�
 
 #### 环境配置
 需要依赖第三方库：boost, boost_date_time, boost_filesystem, boost_system, boost_timer, freeglut, eigen3，jsoncpp，alglib，imgui
-#### 运行示例：arcSim是一个离线的模拟库，此暂时为录帧重播
+#### 运行示例：arcSim是一个离线的模拟库，此实例为录帧重播
 ![](gif/sleeve.gif)
  
 
